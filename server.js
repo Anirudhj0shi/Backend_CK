@@ -3,20 +3,27 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "express";
 import  {Contact}  from "./Models/Contact.js";
-import contactRouter from './routes/contact.js'
+import contactRouter from './routes/contact.js';
+import cors from "cors";
+import { config } from "dotenv";
+
 
 
 const app = express();
+
+config({
+    path:'.env'
+})
 app.use(bodyParser.json());
 app.use(
     cors({
-        origin: "http://localhost:5173/",
+        origin: process.env.Frontend_URl,
         method:["GET","POST","PUT","DELETE"],
         credential:true
     })
 )
  
-mongoose.connect("mongodb+srv://Anirudh44:VhEMGjmh9J5DJILa@anirudh44.duikqvt.mongodb.net/",{
+mongoose.connect(process.env.Mongo_URL,{
     dbName:"MERN_Project_Contact_Keeper"
 }).then(()=>console.log("MongoDB Connected....!"));
 
